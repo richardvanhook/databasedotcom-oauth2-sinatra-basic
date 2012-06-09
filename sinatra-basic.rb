@@ -26,12 +26,12 @@ class SinatraBasic < Sinatra::Base
   
   get '/*' do
     if env['databasedotcom.client'].nil?
-      "<html><body>You're not logged in.  Click <a href=\"/auth/salesforce\">here </a> to login.</body></html>"
+      "<html><body>You're not logged in.  Click <a href=\"/auth/salesforce\">here</a> to login.</body></html>"
     else
       token = env['databasedotcom.token']
       userinfo = nil
       userinfo = token.post(token['id']).parsed unless token.nil?
-      "<html><body>You're logged in as #{userinfo['username']}.  Click <a href=\"/logout\">here </a> to logout.</body></html>"
+      "<html><body>You're logged in as #{userinfo['username']}.  Click <a href=\"/logout\">here</a> to logout.</body></html>"
     end
   end
 
