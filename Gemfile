@@ -2,10 +2,7 @@ source "http://rubygems.org"
 gem "thin"
 gem "rack-ssl"
 gem "sinatra"
-gem "oauth2"
-gem "addressable"
-gem "databasedotcom"
-gem "haml"
+gem "databasedotcom-oauth2"
 
 group :development do
   gem "wirble"
