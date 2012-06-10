@@ -1,3 +1,3 @@
 #\ -w -p 5000
-require './sinatra-basic'
+require './app'
 run SinatraBasic.new

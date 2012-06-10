@@ -1,6 +1,7 @@
 require "sinatra/base"
 require "rack/ssl" unless ENV['RACK_ENV'] == "development"
 require "base64"
+require "oauth2"
 require "databasedotcom-oauth2"
 
 class SinatraBasic < Sinatra::Base
@@ -22,6 +23,12 @@ class SinatraBasic < Sinatra::Base
   get '/logout' do
     request.env['rack.session'] = {}
     redirect to("/")
+  end
+  
+  get '/methods' do
+    "<html><body><table>" + 
+      (OAuth2::AccessToken.methods.sort.collect{|method| "<tr><td>" + method.to_s + "</td></tr>" }).to_s +
+      "</table></body></html>"
   end
   
   get '/*' do
