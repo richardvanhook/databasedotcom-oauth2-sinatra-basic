@@ -1,4 +1,5 @@
 require "databasedotcom"
+require "oauth2"
 module OAuth2
   class AccessToken
     def to_hash
@@ -14,7 +15,6 @@ module OAuth2
     end
   end
 end
-require "oauth2"
 module Databasedotcom
   
   class Client
