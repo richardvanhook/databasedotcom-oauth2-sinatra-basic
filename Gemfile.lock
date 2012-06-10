@@ -54,6 +54,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  addressable
   databasedotcom
   heroku
   oauth2
