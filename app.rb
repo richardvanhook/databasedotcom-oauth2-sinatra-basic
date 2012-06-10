@@ -24,12 +24,6 @@ class SinatraBasic < Sinatra::Base
     redirect to("/")
   end
   
-  get '/methods' do
-    "<html><body><table>" + 
-      (OAuth2::AccessToken.methods.sort.collect{|method| "<tr><td>" + method.to_s + "</td></tr>" }).to_s +
-      "</table></body></html>"
-  end
-  
   get '/*' do
     if env['databasedotcom.client'].nil?
       "<html><body>You're not logged in.  Click <a href=\"/auth/salesforce\">here</a> to login.</body></html>"
