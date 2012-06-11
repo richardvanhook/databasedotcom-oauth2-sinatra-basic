@@ -12,7 +12,6 @@ class SinatraBasic < Sinatra::Base
     :endpoints            => {"login.salesforce.com" => {:key => ENV['CLIENT_ID'], :secret => ENV['CLIENT_SECRET']}}
 
   configure do
-    set :port                , ENV['PORT']
   end
 
   get '/logout' do
