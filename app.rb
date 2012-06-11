@@ -11,14 +11,6 @@ class SinatraBasic < Sinatra::Base
     :token_encryption_key => Base64.strict_decode64(ENV['TOKEN_ENCRYPTION_KEY']),
     :endpoints            => {"login.salesforce.com" => {:key => ENV['CLIENT_ID'], :secret => ENV['CLIENT_SECRET']}}
 
-  configure do
-    set :app_file            , __FILE__
-    set :root                , File.expand_path("../..",__FILE__)
-    set :port                , ENV['PORT']
-    set :raise_errors        , Proc.new { false }
-    set :show_exceptions     , true
-  end
-
   get '/logout' do
     request.env['rack.session'] = {}
     redirect to("/")
