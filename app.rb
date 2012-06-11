@@ -9,14 +9,16 @@ class SinatraBasic < Sinatra::Base
   use Rack::Session::Cookie
   use Databasedotcom::OAuth2::WebServerFlow, 
     :token_encryption_key => Base64.strict_decode64(ENV['TOKEN_ENCRYPTION_KEY']),
-    :endpoints            => {"login.salesforce.com" => {:key => ENV['CLIENT_ID'], :secret => ENV['CLIENT_SECRET']}}
-
-  configure do
-  end
-
+    :endpoints            => {"login.salesforce.com" => {:key => ENV['CLIENT_ID'], :secret => ENV['CLIENT_SECRET']}},
+    :display              => "touch"
+    
   get '/logout' do
     request.env['rack.session'] = {}
     redirect to("/")
+  end
+
+  get '/auth/salesforce/failure' do
+    "<html><body>Ruh-roh: #{params['message']}</body></html>"
   end
   
   get '/*' do
