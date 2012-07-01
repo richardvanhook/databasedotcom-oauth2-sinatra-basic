@@ -11,8 +11,10 @@ class SinatraBasic < Sinatra::Base
 
   # Rack Middleware
   use Rack::SSL unless ENV['RACK_ENV'] == "development"  # only utilized when deployed to heroku
-  use Rack::Session::Cookie, :expire_after => 60*60*7    # holds oauth2 token in encrypted, serialized form
+  use Rack::Session::Pool#, :expire_after => 60*60*7    # holds oauth2 token in encrypted, serialized form
   use Databasedotcom::OAuth2::WebServerFlow,             # will intercept requests sent to /auth/salesforce
+    :prompt               => "login consent",
+    :debugging            => true,
     :token_encryption_key => Base64.strict_decode64(ENV['TOKEN_ENCRYPTION_KEY']),
     :endpoints            => {"login.salesforce.com" => {
                               :key => ENV['CLIENT_ID'], :secret => ENV['CLIENT_SECRET']}},
