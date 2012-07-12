@@ -11,7 +11,7 @@ class SinatraBasic < Sinatra::Base
 
   # Rack Middleware
   use Rack::SSL unless ENV['RACK_ENV'] == "development"  # only utilized when deployed to heroku
-  use Rack::Session::Pool#, :expire_after => 60*60*7    # holds oauth2 token in encrypted, serialized form
+  use Rack::Session::Cookie, :expire_after => 60*60*7    # holds oauth2 token in encrypted, serialized form
   use Databasedotcom::OAuth2::WebServerFlow,             # will intercept requests sent to /auth/salesforce
     :debugging            => true,
     :token_encryption_key => Base64.strict_decode64(ENV['TOKEN_ENCRYPTION_KEY']),
@@ -26,7 +26,7 @@ class SinatraBasic < Sinatra::Base
   
   # Clears rack session.
   get '/logout' do
-    request.env['rack.session'] = {}  #clear session
+    client.logout if authenticated?
     redirect to("/")
   end
 
@@ -42,7 +42,7 @@ class SinatraBasic < Sinatra::Base
     if unauthenticated?
       "<html><body>You're not logged in.  Click <a href=\"/auth/salesforce\">here</a> to login.</body></html>"
     else
-      "<html><body>You're logged in as #{me.username}.  Click <a href=\"/logout\">here</a> to logout.</body></html>"
+      "<html><body>You're logged in as #{me.username} #{client.org_id}.  Click <a href=\"/logout\">here</a> to logout.</body></html>"
     end
   end
 
