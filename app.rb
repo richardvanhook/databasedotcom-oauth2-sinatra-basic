@@ -3,7 +3,7 @@ require "rack/ssl" unless ENV['RACK_ENV'] == "development" # only utilized when 
 require "base64"
 require "databasedotcom-oauth2"
 
-class SinatraBasic < Sinatra::Base
+class App < Sinatra::Base
 
   # validate environment variables set
   fail "TOKEN_ENCRYPTION_KEY, CLIENT_ID, and CLIENT_SECRET environment variables must not be nil" \
